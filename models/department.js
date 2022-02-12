@@ -15,9 +15,10 @@ module.exports = (sequelize, DataTypes) => {
   }
   department.init({
     id: {
-      type: DataTypes.STRING,
       allowNull: false,
+      autoIncrement: true,
       primaryKey: true,
+      type: DataTypes.INTEGER,
 
     },
     department_name: {

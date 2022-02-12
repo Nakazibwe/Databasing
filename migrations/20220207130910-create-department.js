@@ -3,9 +3,10 @@ module.exports = {
   async up(queryInterface, DataTypes) {
     await queryInterface.createTable('departments', {
       id: {
-        primaryKey: true,
-        type: DataTypes.STRING,
         allowNull: false,
+        autoIncrement: true,
+        primaryKey: true,
+        type: DataTypes.INTEGER,
       },
       
       department_name: {

@@ -4,16 +4,17 @@ module.exports = {
     await queryInterface.createTable('roles', {
       id: {
         allowNull: false,
+        autoIncrement: true,
         primaryKey: true,
-        type: DataTypes.STRING,
+        type: DataTypes.INTEGER,
         
       },
-      role: {
+      staff_role: {
         type: DataTypes.STRING,
         allowNull: false,
       },
       salary: {
-        type: DataTypes.BOOLEAN,
+        type: DataTypes.DECIMAL,
         allowNull: false,
       },
       createdAt: {

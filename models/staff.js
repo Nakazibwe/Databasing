@@ -15,9 +15,10 @@ module.exports = (sequelize, DataTypes) => {
   }
   staff.init({
     id: {
-      type: DataTypes.STRING,
       allowNull: false,
+      autoIncrement: true,
       primaryKey: true,
+      type: DataTypes.INTEGER,
 
     },
     first_name: {
@@ -32,13 +33,15 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.DATE,
       allowNull: false,
     },
-    role_id: {
-      type: DataTypes.STRING,
+    roleId: {
+      type: DataTypes.INTEGER,
       allowNull: false,
+      foreignKey:true,
     },
-    department_id: {
-      type: DataTypes.STRING,
+    departmentId: {
+      type: DataTypes.INTEGER,
       allowNull: false,
+      foreignKey:true,
     }
   }, {
     sequelize,
@@ -48,13 +51,13 @@ module.exports = (sequelize, DataTypes) => {
     staff.belongsTo(models.role, {
       foreignKey: {
         allowNull: false,
-        type: DataTypes.STRING,
+        type: DataTypes.INTEGER,
       },
     });
     staff.belongsTo(models.department, {
       foreignKey: {
         allowNull: false,
-        type: DataTypes.STRING,
+        type: DataTypes.INTEGER,
       },
     });
     staff.hasMany(models.staffCourse, {
