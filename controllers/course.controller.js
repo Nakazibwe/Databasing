@@ -34,10 +34,10 @@ exports.postCourses = async (req,res)=>{
 const {course_name} = req.body;
 try {
     const newCourse = await course.create({course_name});
-    if(!newCourse){throw 'New Course was not created'}
+    if(!newCourse){throw 'New Course creation failed'}
     res.status(201).json(newCourse);
 } catch (error) {
-    if(error == 'New Course was not created'){
+    if(error == 'New Course creation failed'){
         return res.status(409).json({ error });
     }
     return res.status(400).json({ error });
