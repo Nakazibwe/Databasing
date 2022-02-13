@@ -43,12 +43,12 @@ try {
     const newStaff = await  staff.create({
         first_name,last_name,date_of_birth,roleId,departmentId
     });
-    if(!newStaff){ throw 'New Staff was not created'}
+    if(!newStaff){ throw 'New Staff creation failed'}
     res.status(201).json(newStaff);
 } catch (error) {
     if(error == 'The role ID  entered is incorrect.'){return res.status(400).json({ error });}
     else if (error == 'The department ID  entered is incorrect.'){return res.status(400).json({ error }); }
-    else if(error == 'New Staff was not created'){return res.status(409).json({ error });}
+    else if(error == 'New Staff creation failed'){return res.status(409).json({ error });}
     return res.status(400).json({ error });
 }
 };
