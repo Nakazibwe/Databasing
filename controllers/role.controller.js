@@ -36,10 +36,10 @@ exports.postRoles = async (req,res)=>{
     const {staff_role,salary} = req.body;
 try {
     const newRole = await role.create({staff_role,salary});
-    if(!newRole){ throw 'New role creation Failed'}
+    if(!newRole){ throw 'New role creation failed'}
     res.status(201).json(newRole);
 } catch (error) {
-    if(error == 'New role creation Failed'){
+    if(error == 'New role creation failed'){
         return res.status(409).json({ error });
     }
     return res.status(400).json({ error });
