@@ -28,8 +28,8 @@ const addStaff = async (req, res) => {
     }else if(checkID(department_id, Department) == false){
         sendMessage(res, 400, "Department ID does not exists")
     }else if((checkID(role_id, Role) == true) && (checkID(department_id, Department) == true)){
-        // createStaff(id, first_name, last_name, date_of_birth, role_id, department_id,res)
-        // const staff =  Staff.create(info)
+        createStaff(id, first_name, last_name, date_of_birth, role_id, department_id,res)
+        const staff =  Staff.create(info)
         const newStaff = await  Staff.create({
             id,first_name,last_name,date_of_birth,role_id,department_id,
         });
