@@ -1,3 +1,4 @@
+const res = require('express/lib/response');
 const { json } = require('express/lib/response');
 const {sequelize,staffCourse,staff,course} = require ('../models');
 //Getting all staff and their courses.
@@ -71,16 +72,43 @@ try {
     const selectedFacilitatorCourse = await staffCourse.findOne(
         {where:{staffId:staffid,courseId:courseid}});
     if(!selectedFacilitatorCourse) {
-        throw 'Enter correct staffID and correct courseID';
+        throw 'Enter correct staffID and correct courseID to access resource for deletion';
     } 
     await selectedFacilitatorCourse.destroy();
-    res.json('Staff course deleted successfully') 
+    res.status(200).json('Staff course deleted successfully') 
 } catch (error) {
-    console.log(error)
-    res.status(400).json({error})
+    if (error == 'Enter correct staffID and correct courseID to access resource for deletion'){
+        return res.status(404).json({error})
+    }
+    return res.status(400).json({error})
 }
 }
 //Updating a staff's course
-exports.updateStaffCourse = async()=>{
+exports.updateStaffCourse = async(req,res)=>{
+const {staffid} = req.params;
+const {oldcourse,newcourse} = req.body;
 
+try {
+    const selectedFacilitatorCourse = await staffCourse.findOne(
+        {where:{staffId:staffid,courseId:oldcourse}});
+    const facilitationCourse = await course.findOne({where:{id:newcourse}});
+    if(!selectedFacilitatorCourse) {
+        throw 'Enter a correct staffID and old courseID to access resource inorder to update';
+    } 
+    else if(!facilitationCourse){
+       throw 'Selected course is unavailable,enter correct a courseID' ;
+    }
+    selectedFacilitatorCourse.courseId = newcourse;
+    await selectedFacilitatorCourse.save();
+    res.status(201).json(selectedFacilitatorCourse);
+} catch (error) {
+    if(error == 'Enter a correct staffID and old courseID to access resource inorder to update'){
+        return res.status(404).json({error})
+    }else if(error == 'Selected course is unavailable,enter correct a courseID'){
+        return res.status(404).json({error})
+    }
+   return res.status(400).json({error});
+   
+
+}
 }
